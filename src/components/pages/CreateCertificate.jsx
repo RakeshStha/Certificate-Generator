@@ -4,7 +4,8 @@ import Certificate from "../assets/image/certificate.png";
 const CreateCertificate = () => {
   const canvas = React.useRef();
 
-  const [userName, setUserName] = useState();
+  const [userName, setUserName] = useState("");
+  const [exprDate, setExprDate] = useState("");
 
   React.useEffect(() => {
     const context = canvas.current.getContext("2d");
@@ -17,16 +18,17 @@ const CreateCertificate = () => {
       context.drawImage(imageObj, 10, 10, 700, 470);
       context.font = "20pt Calibri";
       context.fillText(userName, 300, 240);
+      context.font = "12pt Calibri";
+      context.fillText(exprDate, 358, 358);
     };
     imageObj.src = Certificate;
   };
 
-  const Download = (context) => {
-    alert("here");
+  const Download = () => {
     var canvas = document.getElementById("canvas");
     var url = canvas.toDataURL("image/png");
     var link = document.createElement("a");
-    link.download = "filename.png";
+    link.download = "certificate.png";
     link.href = url;
     link.click();
   };
@@ -40,14 +42,25 @@ const CreateCertificate = () => {
           <div className="card-body p-4">
             <div className="form-group mb-3">
               <label htmlFor="name" className="mb-2">
-                {" "}
                 Name <span className="text-danger">*</span>
               </label>
               <input
                 type="text"
                 className="form-control"
+                placeholder="Name for certificate"
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
+              />
+            </div>
+            <div className="form-group mb-3">
+              <label htmlFor="exprDate" className="mb-2">
+                Expire Date <span className="text-danger">*</span>
+              </label>
+              <input
+                type="date"
+                className="form-control"
+                value={exprDate}
+                onChange={(e) => setExprDate(e.target.value)}
               />
             </div>
             {/* <div className="form-group">
